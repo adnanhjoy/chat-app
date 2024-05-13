@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../layout/MainLayout";
+import ChatContainerPage from "../pages/chatContainer/ChatContainerPage";
 
 export const router = createBrowserRouter([
     {
@@ -7,8 +8,8 @@ export const router = createBrowserRouter([
         element: <MainLayout />,
         children: [
             {
-                path: '/',
-                element:<p>home</p>
+                path: '/:id',
+                element: <ChatContainerPage />
             }
         ]
     }
