@@ -4,7 +4,7 @@ import Sidebar from '../shared/Sidebar';
 
 const MainLayout = () => {
     return (
-        <div className='2xl:container'>
+        <div className='2xl:container 2xl:mx-auto'>
             <div className='grid grid-cols-4'>
                 <div className='col-span-1'>
                     <Sidebar />
