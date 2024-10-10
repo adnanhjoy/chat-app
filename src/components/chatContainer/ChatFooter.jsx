@@ -6,7 +6,7 @@ import { TiAttachment } from 'react-icons/ti';
 
 const ChatFooter = () => {
     return (
-        <div className='py-4 border-t w-full flex items-center justify-between bg-white'>
+        <div className='py-4 border-t w-full flex items-center justify-between bg-white px-2'>
             <div className='flex items-center gap-x-4 text-primary'>
                 <TiAttachment className='text-2xl rounded-full cursor-pointer' />
                 <IoMdImage className='text-xl rounded-full cursor-pointer' />
