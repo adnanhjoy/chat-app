@@ -4,15 +4,18 @@ import ChatFooter from '../../components/chatContainer/ChatFooter';
 
 const ChatContainerPage = () => {
     return (
-        <div className='min-h-screen relative'>
+        <div className='bg-white border rounded-lg h-full flex flex-col'>
+            {/* Chat Header */}
             <ChatHead />
-            <div className='max-h-[78vh] overflow-auto p-2 my-2'>
+            
+            {/* Chat Messages Container */}
+            <div className='flex-1 overflow-y-auto p-2 my-2'>
                 {
                     Array(20).fill().map((_, idx) => {
                         if (idx % 2 === 1) {
                             return (
                                 <div key={idx} className='bg-gray-200 text-sm w-fit py-1 px-3 rounded-full text-black'>
-                                    <p>Hello ! Adnan, How are you ?</p>
+                                    <p>Hello! Adnan, how are you?</p>
                                 </div>
                             );
                         } else {
@@ -26,8 +29,9 @@ const ChatContainerPage = () => {
                         }
                     })
                 }
-
             </div>
+            
+            {/* Chat Footer*/}
             <ChatFooter />
         </div>
     );
