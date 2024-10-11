@@ -20,14 +20,14 @@ const MainLayout = () => {
                 </div>
 
                 {/* Chat Container Outlet */}
-                <div className='col-span-5 py-2 h-screen overflow-auto'>
+                <div className='col-span-7 h-screen overflow-hidden'>
                     <Outlet />
                 </div>
 
                 {/* Chat Profile */}
-                <div className='col-span-2 h-full py-2 pr-2'>
+                {/* <div className='col-span-2 h-full py-2 pr-2'>
                     <ChatProfile />
-                </div>
+                </div> */}
             </div>
         </div>
     );

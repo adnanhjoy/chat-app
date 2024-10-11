@@ -45,6 +45,16 @@ export const friendsApi = apiSlice.injectEndpoints({
         }),
 
 
+        //get friend user
+        getAllUsers: builder.query({
+            query: () => ({
+                url: `/friend/all`,
+                method: "GET",
+            }),
+            providesTags: ['Friend']
+        }),
+
+
     }),
 });
 
@@ -53,4 +63,5 @@ export const {
     useAcceptFriendRequestMutation,
     useGetFriendRequestQuery,
     useGetFriendListQuery,
+    useGetAllUsersQuery,
 } = friendsApi;
