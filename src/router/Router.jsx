@@ -5,6 +5,7 @@ import LoginPage from "../pages/loginPage/LoginPage";
 import PrivateRoute from "./PrivateRoute";
 import FriendRequestPage from "../pages/friendRequestPage/FriendRequestPage";
 import FriendSuggestionPage from "../pages/friendSuggestionsPage/FriendSuggestionPage";
+import HomePage from "../pages/homePage/HomePage";
 
 export const router = createBrowserRouter([
     {
@@ -14,6 +15,10 @@ export const router = createBrowserRouter([
                 <MainLayout />
             </PrivateRoute>,
         children: [
+            {
+                path: '/',
+                element: <HomePage />
+            },
             {
                 path: '/:receiverId',
                 element: <ChatContainerPage />
