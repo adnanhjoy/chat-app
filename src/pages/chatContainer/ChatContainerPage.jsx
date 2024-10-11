@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ChatHead from '../../components/chatContainer/ChatHead';
 import ChatFooter from '../../components/chatContainer/ChatFooter';
 import ChatProfile from '../../components/profile/ChatProfile';
@@ -6,24 +6,43 @@ import { useParams } from 'react-router-dom';
 import { useGetMessageQuery, useSendMessageMutation } from '../../redux/messegeApi/messegeApi';
 import { useSelector } from 'react-redux';
 import { useGetSingleFriendQuery } from '../../redux/friendApi/friendApi';
+import { io } from 'socket.io-client';
+
+const socket = io("http://localhost:5000");
 
 const ChatContainerPage = () => {
     const { receiverId } = useParams();
-    const [seeProfile, setSeeProfile] = useState(true)
-    const { data } = useGetMessageQuery(receiverId);
-    const { data: singleFriend } = useGetSingleFriendQuery(receiverId)
+    const [seeProfile, setSeeProfile] = useState(true);
+    const [messages, setMessages] = useState([]);
+    const { data: initialMessages } = useGetMessageQuery(receiverId);
+    const { data: singleFriend } = useGetSingleFriendQuery(receiverId);
     const [sendMessage] = useSendMessageMutation();
     const { user } = useSelector((state) => state?.auth);
 
+    useEffect(() => {
+        if (initialMessages) {
+            setMessages(initialMessages);
+        }
+        socket.on('receive_message', (newMessage) => {
+            setMessages((prevMessages) => [...prevMessages, newMessage]);
+        });
 
-    const handleSendMessage = (e) => {
+        return () => {
+            socket.off('receive_message');
+        };
+    }, [initialMessages]);
+
+    const handleSendMessage = async (e) => {
         e.preventDefault();
         const content = e.target.content.value;
         const sendData = {
             receiverId,
-            content
+            content,
+            sender: user._id
         };
-        sendMessage(sendData);
+
+        socket.emit('send_message', sendData);
+        await sendMessage(sendData);
         e.target.reset();
     };
 
@@ -35,12 +54,11 @@ const ChatContainerPage = () => {
                     singleFriend={singleFriend}
                     seeProfile={seeProfile}
                     setSeeProfile={setSeeProfile}
-
                 />
 
                 {/* Chat Messages Container */}
                 <div className='flex-1 overflow-y-auto p-2 my-2'>
-                    {data?.map(message => {
+                    {messages?.map(message => {
                         const isSender = message?.sender?._id === user?._id;
 
                         if (isSender) {
@@ -61,19 +79,16 @@ const ChatContainerPage = () => {
                     })}
                 </div>
 
-                {/* Chat Footer*/}
+                {/* Chat Footer */}
                 <ChatFooter handleSendMessage={handleSendMessage} />
             </div>
 
             {/* Sidebar */}
-            {
-                seeProfile &&
+            {seeProfile && (
                 <div className='w-1/3 h-full'>
-                    <ChatProfile
-                        singleFriend={singleFriend}
-                    />
+                    <ChatProfile singleFriend={singleFriend} />
                 </div>
-            }
+            )}
         </div>
     );
 };
