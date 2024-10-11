@@ -5,7 +5,7 @@ import { useGetFriendListQuery } from '../redux/friendApi/friendApi';
 
 const Sidebar = () => {
     const { data } = useGetFriendListQuery();
-    console.log(data)
+
     return (
         <div className='bg-white p-2 border rounded-lg h-full flex flex-col'>
             <div>

@@ -2,43 +2,62 @@ import React from 'react';
 import ChatHead from '../../components/chatContainer/ChatHead';
 import ChatFooter from '../../components/chatContainer/ChatFooter';
 import ChatProfile from '../../components/profile/ChatProfile';
+import { useParams } from 'react-router-dom';
+import { useGetMessageQuery, useSendMessageMutation } from '../../redux/messegeApi/messegeApi';
+import { useSelector } from 'react-redux';
 
 const ChatContainerPage = () => {
+    const { receiverId } = useParams();
+    const { data } = useGetMessageQuery(receiverId);
+    const [sendMessage] = useSendMessageMutation();
+    const { user } = useSelector((state) => state?.auth);
+
+    const handleSendMessage = (e) => {
+        e.preventDefault();
+        const content = e.target.content.value;
+        const sendData = {
+            receiverId,
+            content
+        };
+        sendMessage(sendData);
+        e.target.reset();
+    };
+
     return (
-        <div className='grid grid-cols-7 gap-2'>
-            <div className='col-span-5 h-full py-2'>
-                <div className='bg-white border rounded-lg h-screen flex flex-col'>
-                    {/* Chat Header */}
-                    <ChatHead />
+        <div className='h-screen flex py-2 gap-2'>
+            <div className='flex-1 bg-white border rounded-lg flex flex-col'>
+                {/* Chat Header */}
+                <ChatHead />
 
-                    {/* Chat Messages Container */}
-                    <div className='flex-1 overflow-y-auto p-2 my-2'>
-                        {
-                            Array(20).fill().map((_, idx) => {
-                                if (idx % 2 === 1) {
-                                    return (
-                                        <div key={idx} className='bg-gray-200 text-sm w-fit py-1 px-3 rounded-full text-black'>
-                                            <p>Hello! Adnan, how are you?</p>
-                                        </div>
-                                    );
-                                } else {
-                                    return (
-                                        <div className='flex items-center justify-end my-2'>
-                                            <div key={idx} className='bg-primary text-sm w-fit py-1 px-3 rounded-full text-white'>
-                                                <p>How can I help you today?</p>
-                                            </div>
-                                        </div>
-                                    );
-                                }
-                            })
+                {/* Chat Messages Container */}
+                <div className='flex-1 overflow-y-auto p-2 my-2'>
+                    {data?.map(message => {
+                        const isSender = message?.sender?._id === user?._id;
+
+                        if (isSender) {
+                            return (
+                                <div key={message?._id} className='flex items-end justify-end my-2'>
+                                    <div className='bg-primary text-sm max-w-xs py-2 px-4 rounded-lg text-white break-words'>
+                                        <p>{message?.content}</p>
+                                    </div>
+                                </div>
+                            );
+                        } else {
+                            return (
+                                <div key={message?._id} className='bg-gray-200 text-sm w-fit max-w-xs py-2 px-4 rounded-lg break-words my-2'>
+                                    <p>{message?.content}</p>
+                                </div>
+                            );
                         }
-                    </div>
-
-                    {/* Chat Footer*/}
-                    <ChatFooter />
+                    })}
                 </div>
+
+                {/* Chat Footer*/}
+                <ChatFooter handleSendMessage={handleSendMessage} />
             </div>
-            <div className='col-span-2 h-full py-2 pr-2'>
+
+            {/* Sidebar */}
+            <div className='w-1/3 h-full pr-2'>
                 <ChatProfile />
             </div>
         </div>

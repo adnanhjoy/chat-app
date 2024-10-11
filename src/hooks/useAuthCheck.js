@@ -9,13 +9,15 @@ export default function useAuthCheck() {
 
   useEffect(() => {
     const localAuth = Cookies.get('token');
-
     if (localAuth) {
+      const auth = JSON.parse(localAuth)
+
       try {
-        if (localAuth) {
+        if (auth?.token) {
           dispatch(
             userLoggedIn({
-              token: localAuth,
+              token: auth?.token,
+              user: auth?.user
             }),
           );
         }

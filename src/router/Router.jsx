@@ -15,7 +15,7 @@ export const router = createBrowserRouter([
             </PrivateRoute>,
         children: [
             {
-                path: '/:id',
+                path: '/:receiverId',
                 element: <ChatContainerPage />
             },
             {

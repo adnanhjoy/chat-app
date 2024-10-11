@@ -3,10 +3,10 @@ import { NavLink } from 'react-router-dom';
 import avatar from '../../assets/avatar.webp';
 
 const ChatCard = ({ friend }) => {
-    const { name, username } = friend || {};
+    const { _id, name, username } = friend || {};
     return (
         <NavLink
-            to={username}
+            to={_id}
             className={({ isActive }) =>
                 `flex items-center gap-x-2 cursor-pointer p-4 rounded-md ${isActive ? 'bg-gray-100' : 'hover:bg-gray-100'}`
             }

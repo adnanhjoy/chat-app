@@ -20,7 +20,7 @@ const MainLayout = () => {
                 </div>
 
                 {/* Chat Container Outlet */}
-                <div className='col-span-7 h-screen overflow-hidden'>
+                <div className='col-span-7'>
                     <Outlet />
                 </div>
 
