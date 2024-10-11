@@ -3,7 +3,7 @@ import avatar from '../../assets/avatar.webp'
 import { useAcceptFriendRequestMutation, useSendFriendRequestMutation } from '../../redux/friendApi/friendApi';
 
 const FriendSuggestionCard = ({ user }) => {
-    const { _id, name, status } = user || {};
+    const { _id, name, status, sender } = user || {};
     const [addFriend,] = useSendFriendRequestMutation();
     const [acceptFriend,] = useAcceptFriendRequestMutation();
 
@@ -19,7 +19,7 @@ const FriendSuggestionCard = ({ user }) => {
         <div className='border rounded-md'  >
             <img className='w-full' src={avatar} alt="avatar" />
             <div className='p-1'>
-                <h3 className='font-medium text-center my-2'>{name}</h3>
+                <h3 className='font-medium text-center my-2'>{sender?.name ? sender?.name : name}</h3>
                 <button onClick={handleSubmit} className='bg-primary hover:bg-green-500 text-white text-sm w-full rounded py-2'>{status === 'pending' ? 'Confirm' : 'Add Friend'}</button>
                 {
                     status === 'pending' &&
