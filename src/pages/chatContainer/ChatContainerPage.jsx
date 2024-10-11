@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ChatHead from '../../components/chatContainer/ChatHead';
 import ChatFooter from '../../components/chatContainer/ChatFooter';
 import ChatProfile from '../../components/profile/ChatProfile';
@@ -19,6 +19,7 @@ const ChatContainerPage = () => {
     const [sendMessage] = useSendMessageMutation();
     const { user } = useSelector((state) => state?.auth);
 
+    const messagesEndRef = useRef(null);
     useEffect(() => {
         if (initialMessages) {
             setMessages(initialMessages);
@@ -31,6 +32,14 @@ const ChatContainerPage = () => {
             socket.off('receive_message');
         };
     }, [initialMessages]);
+
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    };
+
+    useEffect(() => {
+        scrollToBottom();
+    }, [messages]);
 
     const handleSendMessage = async (e) => {
         e.preventDefault();
@@ -77,6 +86,7 @@ const ChatContainerPage = () => {
                             );
                         }
                     })}
+                    <div ref={messagesEndRef} />
                 </div>
 
                 {/* Chat Footer */}
