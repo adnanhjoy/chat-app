@@ -1,16 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ChatHead from '../../components/chatContainer/ChatHead';
 import ChatFooter from '../../components/chatContainer/ChatFooter';
 import ChatProfile from '../../components/profile/ChatProfile';
 import { useParams } from 'react-router-dom';
 import { useGetMessageQuery, useSendMessageMutation } from '../../redux/messegeApi/messegeApi';
 import { useSelector } from 'react-redux';
+import { useGetSingleFriendQuery } from '../../redux/friendApi/friendApi';
 
 const ChatContainerPage = () => {
     const { receiverId } = useParams();
+    const [seeProfile, setSeeProfile] = useState(true)
     const { data } = useGetMessageQuery(receiverId);
+    const { data: singleFriend } = useGetSingleFriendQuery(receiverId)
     const [sendMessage] = useSendMessageMutation();
     const { user } = useSelector((state) => state?.auth);
+
 
     const handleSendMessage = (e) => {
         e.preventDefault();
@@ -24,10 +28,15 @@ const ChatContainerPage = () => {
     };
 
     return (
-        <div className='h-screen flex py-2 gap-2'>
+        <div className='h-screen flex py-2 gap-2 pr-2'>
             <div className='flex-1 bg-white border rounded-lg flex flex-col'>
                 {/* Chat Header */}
-                <ChatHead />
+                <ChatHead
+                    singleFriend={singleFriend}
+                    seeProfile={seeProfile}
+                    setSeeProfile={setSeeProfile}
+
+                />
 
                 {/* Chat Messages Container */}
                 <div className='flex-1 overflow-y-auto p-2 my-2'>
@@ -57,9 +66,14 @@ const ChatContainerPage = () => {
             </div>
 
             {/* Sidebar */}
-            <div className='w-1/3 h-full pr-2'>
-                <ChatProfile />
-            </div>
+            {
+                seeProfile &&
+                <div className='w-1/3 h-full'>
+                    <ChatProfile
+                        singleFriend={singleFriend}
+                    />
+                </div>
+            }
         </div>
     );
 };
