@@ -4,7 +4,7 @@ import { useGetAllUsersQuery } from '../../redux/friendApi/friendApi';
 
 const FriendSuggestionPage = () => {
     const { data } = useGetAllUsersQuery();
-    console.log(data)
+
     return (
         <div className='bg-white h-full flex flex-col py-2'>
             <div className='flex-1 overflow-y-auto'>

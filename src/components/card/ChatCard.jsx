@@ -8,7 +8,7 @@ const ChatCard = ({ friend }) => {
         <NavLink
             to={username}
             className={({ isActive }) =>
-                `flex items-center gap-x-2 cursor-pointer p-4 rounded-md ${isActive ? 'bg-gray-200' : 'hover:bg-gray-100'}`
+                `flex items-center gap-x-2 cursor-pointer p-4 rounded-md ${isActive ? 'bg-gray-100' : 'hover:bg-gray-100'}`
             }
         >
             <img className='h-10 rounded-full' src={avatar} alt="avatar" />
