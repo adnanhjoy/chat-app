@@ -40,7 +40,7 @@ const LoginPage = () => {
                     <h1 className='uppercase font-medium'>Welcome to Joy Chat</h1>
                 </div>
                 {
-                    isError && <p className='text-red-800 text-center'>{error?.data?.message}</p>
+                    isError && <p className='text-red-800 text-sm mt-2 text-center'>{error?.data?.error}</p>
                 }
                 <form onSubmit={handleLoginAdmin} className='p-4'>
                     <input className='placeholder:text-xs mt-2 outline-none border rounded-md p-2 w-full' type="email" name='email' placeholder='Email' />

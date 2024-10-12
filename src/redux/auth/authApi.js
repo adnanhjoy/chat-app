@@ -23,7 +23,28 @@ export const authApi = apiSlice.injectEndpoints({
 
     }),
 
+    signUp: builder.mutation({
+      query: (data) => ({
+        url: `/auth/signup`,
+        method: "POST",
+        body: data,
+      }),
+      async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+        try {
+          const { data } = await queryFulfilled;
+          Cookies.set('token', JSON.stringify(data), { expires: 1 });
+          dispatch(userLoggedIn(data));
+        } catch (error) {
+          console.error("signup failed: ", error);
+        }
+      }
+
+    }),
+
   }),
 });
 
-export const { useLoggedInMutation, useUserRegisterMutation } = authApi;
+export const {
+  useLoggedInMutation,
+  useSignUpMutation
+} = authApi;

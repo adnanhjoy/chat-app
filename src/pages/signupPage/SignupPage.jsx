@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { HiOutlineEyeOff } from 'react-icons/hi';
 import { HiOutlineEye } from 'react-icons/hi2';
 import { IoChatbubblesOutline } from 'react-icons/io5';
 import { VscCoffee } from 'react-icons/vsc';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useSignUpMutation } from '../../redux/auth/authApi';
 
 const SignupPage = () => {
     const [toggle, setToggle] = useState(false);
+    const [signUp, { isLoading, isSuccess, isError, error }] = useSignUpMutation();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/';
 
     const handleSignup = (e) => {
         e.preventDefault();
@@ -21,9 +26,15 @@ const SignupPage = () => {
             email,
             password
         }
-        console.log(data)
+        signUp(data)
     }
 
+
+    useEffect(() => {
+        if (isSuccess) {
+            navigate(from, { replace: true })
+        }
+    }, [isSuccess])
 
     return (
         <div className='h-screen flex items-center justify-center cover-bg px-4 md:px-0'>
@@ -42,6 +53,9 @@ const SignupPage = () => {
                 <div className='md:w-1/2 bg-white p-5 flex items-center justify-center rounded-b-md md:rounded-r-md'>
                     <div className='w-full'>
                         <h2 className='text-primary font-medium text-4xl text-center mb-5'>Signup</h2>
+                        {
+                            isError && <p className='text-red-800 text-center text-sm mb-2'>{error?.data?.error}</p>
+                        }
                         <form onSubmit={handleSignup}>
                             <input className='placeholder:text-xs mb-2 outline-none border rounded-md p-2 w-full' type="text" name='name' placeholder='Name' />
                             <input className='placeholder:text-xs mb-2 outline-none border rounded-md p-2 w-full' type="text" name='username' placeholder='Username' />
@@ -54,7 +68,7 @@ const SignupPage = () => {
                             </div>
 
                             <div className='flex items-center justify-center mt-10'>
-                                <button className='text-white font-medium bg-green-800 w-full py-3 rounded hover:bg-primary ease-in-out duration-500'>Signup</button>
+                                <button className='text-white font-medium bg-green-800 w-full py-3 rounded hover:bg-primary ease-in-out duration-500'>{isLoading ? 'Loading' : 'Signup'}</button>
                             </div>
                         </form>
 
