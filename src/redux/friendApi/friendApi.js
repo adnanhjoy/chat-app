@@ -35,6 +35,16 @@ export const friendsApi = apiSlice.injectEndpoints({
         }),
 
 
+        //get sent friend request
+        getSentFriendRequest: builder.query({
+            query: () => ({
+                url: `/friend/sent-request`,
+                method: "GET",
+            }),
+            providesTags: ['Friend']
+        }),
+
+
         //get friend list
         getFriendList: builder.query({
             query: () => ({
@@ -72,6 +82,7 @@ export const {
     useSendFriendRequestMutation,
     useAcceptFriendRequestMutation,
     useGetFriendRequestQuery,
+    useGetSentFriendRequestQuery,
     useGetFriendListQuery,
     useGetSingleFriendQuery,
     useGetAllUsersQuery,
