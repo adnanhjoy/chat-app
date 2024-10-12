@@ -6,6 +6,7 @@ import PrivateRoute from "./PrivateRoute";
 import FriendRequestPage from "../pages/friendRequestPage/FriendRequestPage";
 import FriendSuggestionPage from "../pages/friendSuggestionsPage/FriendSuggestionPage";
 import HomePage from "../pages/homePage/HomePage";
+import SignupPage from "../pages/signupPage/SignupPage";
 
 export const router = createBrowserRouter([
     {
@@ -36,5 +37,9 @@ export const router = createBrowserRouter([
     {
         path: '/login',
         element: <LoginPage />
+    },
+    {
+        path: '/signup',
+        element: <SignupPage />
     }
 ])

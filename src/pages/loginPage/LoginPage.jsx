@@ -3,6 +3,7 @@ import { HiOutlineEye } from "react-icons/hi2";
 import { HiOutlineEyeOff } from "react-icons/hi";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useLoggedInMutation } from '../../redux/auth/authApi';
+import { IoChatbubblesOutline } from 'react-icons/io5';
 
 
 const LoginPage = () => {
@@ -31,17 +32,19 @@ const LoginPage = () => {
     }, [isSuccess])
 
     return (
-        <div className='flex items-center justify-center h-screen'>
-            <div className='md:w-80 mx-4 md:mx-0 py-10 px-5 rounded-b-md border border-primary rounded-t-3xl'>
-                <h2 className='text-primary font-medium text-4xl text-center mb-5'>Login</h2>
+        <div className='flex items-center justify-center h-screen cover-bg'>
+            <div className='md:w-96 w-full mx-4 md:mx-0 border bg-white pb-4 shadow rounded-md'>
+                <div className='flex flex-col items-center justify-center bg-primary rounded-t-md text-white py-10 rounded-b-[20%]'>
+                    <IoChatbubblesOutline className='text-6xl' />
+                    <h2 className='text-white font-medium text-4xl text-center my-2'>Login</h2>
+                    <h1 className='uppercase font-medium'>Welcome to Joy Chat</h1>
+                </div>
                 {
                     isError && <p className='text-red-800 text-center'>{error?.data?.message}</p>
                 }
-                <form onSubmit={handleLoginAdmin}>
-                    <label className='text-white'>Email</label>
-                    <input className='placeholder:text-xs mt-2 mb-5 outline-none border border-primary rounded-md p-2 w-full' type="email" name='email' placeholder='Email' />
-                    <label className='text-white'>Password</label>
-                    <div className='flex items-center bg-white mt-2 rounded-md border border-primary'>
+                <form onSubmit={handleLoginAdmin} className='p-4'>
+                    <input className='placeholder:text-xs mt-2 outline-none border rounded-md p-2 w-full' type="email" name='email' placeholder='Email' />
+                    <div className='flex items-center bg-white mt-2 rounded-md border'>
                         <input className='placeholder:text-xs outline-none rounded-md px-2 w-full' name='password' type={toggle ? 'text' : 'password'} placeholder='Password' />
                         <button onClick={() => setToggle(!toggle)} type='button' className='p-3 bg-gray-300 rounded-r-md'>
                             {
