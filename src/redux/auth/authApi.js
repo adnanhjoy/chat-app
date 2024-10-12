@@ -14,7 +14,7 @@ export const authApi = apiSlice.injectEndpoints({
       async onQueryStarted(arg, { queryFulfilled, dispatch }) {
         try {
           const { data } = await queryFulfilled;
-          Cookies.set('token', JSON.stringify(data), { expires: 7 });
+          Cookies.set('token', JSON.stringify(data), { expires: 1 });
           dispatch(userLoggedIn(data));
         } catch (error) {
           console.error("Login failed: ", error);
