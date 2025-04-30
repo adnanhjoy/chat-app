@@ -11,7 +11,10 @@ const ChatCard = ({ friend }) => {
                 `flex items-center gap-x-2 cursor-pointer p-4 rounded-md ${isActive ? 'bg-gray-100' : 'hover:bg-gray-100'}`
             }
         >
-            <img className='h-10 rounded-full' src={avatar} alt="avatar" />
+            <div className='relative'>
+                <img className='h-10 rounded-full' src={avatar} alt="avatar" />
+                <p className='bg-primary h-3 w-3 rounded-full absolute right-0 bottom-0'></p>
+            </div>
             <div>
                 <h3 className='font-medium'>{name}</h3>
                 <p className='text-xs text-dark'>Hello Adnan How are you?</p>

@@ -9,7 +9,10 @@ const ChatHead = ({ singleFriend, setSeeProfile, seeProfile }) => {
     return (
         <div className='border-b p-2 flex items-center justify-between'>
             <div className='flex items-center gap-x-2'>
-                <img className='h-10 rounded-full' src={avatar} alt="avatar" />
+                <div className='relative'>
+                    <img className='h-10 rounded-full' src={avatar} alt="avatar" />
+                    <p className='bg-primary h-3 w-3 rounded-full absolute right-0 bottom-0'></p>
+                </div>
                 <div>
                     <h3 className='font-medium'>{name}</h3>
                     <p className='text-xs text-dark'>Active Now</p>
